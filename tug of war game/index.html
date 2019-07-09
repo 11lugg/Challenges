@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tug of war game</title>
+    <style>
+      header {
+        text-align: center;
+      }
+
+      main {
+        display: flex;
+        justify-content: center;
+      }
+
+      section {
+        margin: 0px;
+        padding: 25px;
+        width: 50vw;
+        height: 60vh;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+
+      img {
+        height: 60%;
+        bottom: 0;
+        align-items: baseline;
+        position: absolute;
+        z-index: 2;
+      }
+
+      @media only screen and (max-width: 600px) {
+        img {
+          height: 20%;
+          right: 0;
+          top: 40%;
+          position: absolute;
+          z-index: 2;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Pug of war</h1>
+      <h2>Get Tugging!</h2>
+    </header>
+
+    <main>
+      <section>
+        <h3>Player 1</h3>
+        <p>bash '\' until you win</p>
+      </section>
+      <img src="./images/pug.png" alt="Puggy Rascal" id="pug" />
+      <section>
+        <h3>Player 2</h3>
+        <p>bash '/' until you win</p>
+      </section>
+    </main>
+    <script>
+      document.addEventListener("keyup", move);
+
+      function move(event) {
+        if (event.code === "IntlBackslash") {
+          document.getElementById("pug").style.left = "0px";
+        } else if (event.code === "Slash") {
+          document.getElementById("pug").style.left = "79%";
+        }
+      }
+    </script>
+  </body>
+</html>
