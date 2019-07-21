@@ -33,6 +33,10 @@
         z-index: 2;
       }
 
+      #countP1, #countP2 {
+        color: red;\\
+      }
+
       @media only screen and (max-width: 600px) {
         img {
           height: 20%;
@@ -53,24 +57,76 @@
     <main>
       <section>
         <h3>Player 1</h3>
+        <p id="countP1">Score: 0</p>
         <p>bash '\' until you win</p>
       </section>
       <img src="./images/pug.png" alt="Puggy Rascal" id="pug" />
       <section>
         <h3>Player 2</h3>
+        <p id="countP2">Score: 0</p>
         <p>bash '/' until you win</p>
       </section>
     </main>
     <script>
-      document.addEventListener("keyup", move);
+      let pug = document.getElementById("pug");
+      let countP1 = document.getElementById("countP1");
+      let countP2 = document.getElementById("countP2");
 
-      function move(event) {
-        if (event.code === "IntlBackslash") {
-          document.getElementById("pug").style.left = "0px";
-        } else if (event.code === "Slash") {
-          document.getElementById("pug").style.left = "79%";
+      let leftPosition = 40;
+      let counterP1 = 0;
+      let counterP2 = 0;  
+      
+      const updateCss = () => {
+        pug.style.left = leftPosition + '%';
+      };
+
+      const pugMove = (direction) => {
+        if (direction === "left") {
+          leftPosition -= 5;
+          updateCss();
+        } else if (direction === "right") {
+          leftPosition += 5;
+          updateCss();
+        } else if (direction === "win") {
+          leftPosition = 40;
+          updateCss();
         }
-      }
+      };
+
+      const reset = (position) => {
+        if (position === -5 || position === 85) {
+          leftPosition = 40;
+          pugMove("win");
+          console.log("Reset");
+        }
+      };
+
+      const win = (position) => {
+        if (position === -5) {
+          alert("Player 1 wins");
+          counterP1++;
+          countP1.innerHTML = "Score: " + counterP1;
+        } else if(position === 85) {
+          alert("Player 2 wins");
+          counterP2++;
+          console.log(counterP2);
+          countP2.innerHTML = "Score: " + counterP2;
+        }
+      };
+
+      const move = (event) => {
+        if (event.code === "IntlBackslash") {
+          pugMove("left");
+          win(leftPosition);
+        } else if (event.code === "Slash") {
+          pugMove("right");
+          win(leftPosition);
+        }
+        reset(leftPosition);
+      };
+      
+    
+      document.addEventListener("keyup", move);
     </script>
   </body>
 </html>
