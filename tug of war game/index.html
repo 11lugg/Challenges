@@ -33,17 +33,25 @@
         z-index: 2;
       }
 
-      #countP1, #countP2 {
-        color: red;\\
+      #countP1,
+      #countP2 {
+        color: red;
       }
 
-      @media only screen and (max-width: 600px) {
-        img {
-          height: 20%;
-          right: 0;
-          top: 40%;
-          position: absolute;
-          z-index: 2;
+      #hide {
+        display: none;
+      }
+
+      @media only screen and (max-width: 480px) {
+        header {
+          display: none;
+        }
+        section {
+          display: none;
+        }
+        #hide {
+          display: unset;
+          text-align: center;
         }
       }
     </style>
@@ -66,6 +74,13 @@
         <p id="countP2">Score: 0</p>
         <p>bash '/' until you win</p>
       </section>
+
+      <footer id="hide">
+        <h2>
+          Tug a pug only works on desktop! Please don't dispare, a mobile
+          friendly version is on its way
+        </h2>
+      </footer>
     </main>
     <script>
       let pug = document.getElementById("pug");
@@ -74,13 +89,13 @@
 
       let leftPosition = 40;
       let counterP1 = 0;
-      let counterP2 = 0;  
-      
+      let counterP2 = 0;
+
       const updateCss = () => {
-        pug.style.left = leftPosition + '%';
+        pug.style.left = leftPosition + "%";
       };
 
-      const pugMove = (direction) => {
+      const pugMove = direction => {
         if (direction === "left") {
           leftPosition -= 5;
           updateCss();
@@ -93,7 +108,7 @@
         }
       };
 
-      const reset = (position) => {
+      const reset = position => {
         if (position === -5 || position === 85) {
           leftPosition = 40;
           pugMove("win");
@@ -101,20 +116,20 @@
         }
       };
 
-      const win = (position) => {
+      const win = position => {
         if (position === -5) {
           alert("Player 1 wins");
           counterP1++;
           countP1.innerHTML = "Score: " + counterP1;
-        } else if(position === 85) {
+        } else if (position === 85) {
           alert("Player 2 wins");
           counterP2++;
-          console.log(counterP2);
+          console.log("Score: " + counterP2);
           countP2.innerHTML = "Score: " + counterP2;
         }
       };
 
-      const move = (event) => {
+      const move = event => {
         if (event.code === "IntlBackslash") {
           pugMove("left");
           win(leftPosition);
@@ -124,8 +139,7 @@
         }
         reset(leftPosition);
       };
-      
-    
+
       document.addEventListener("keyup", move);
     </script>
   </body>
