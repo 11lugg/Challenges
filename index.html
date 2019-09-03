@@ -1,39 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Game portfolio</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tug of war game</title>
     <style>
-    img {
-        width: 500px;
-        height: 317px;
-        border: 2px solid black;
-        border-radius: 5px;
-    }
+      header {
+        text-align: center;
+      }
 
-    body {
+      main {
         display: flex;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
-        
-    }
-    
-    
-    </style>
-</head>
-<body>
+        justify-content: center;
+      }
 
-    <div>
-        <h1>Tug a pug</h1>
-        <a href="./tug of war game/index.html"><img src="./images/tug a pug.PNG" alt="Tug a pug"></a>
-    </div>
-    <div>
-        <h1>Hostile Aliens</h1>
-        <a href="./hostile aliens/index.html"><img src="./images/alien game.PNG" alt="Hostile Aliens"></a>
-    </div>
-    
-</body>
+      section {
+        margin: 0px;
+        padding: 25px;
+        width: 50vw;
+        height: 60vh;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+
+      img {
+        height: 60%;
+        bottom: 0;
+        align-items: baseline;
+        position: absolute;
+        z-index: 2;
+      }
+
+      #countP1,
+      #countP2 {
+        color: red;
+      }
+
+      #hide {
+        display: none;
+      }
+
+      @media only screen and (max-width: 480px) {
+        header {
+          display: none;
+        }
+        section {
+          display: none;
+        }
+        #hide {
+          display: unset;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Tug a pug</h1>
+      <h2>Get Tugging!</h2>
+    </header>
+
+    <main>
+      <section>
+        <h3>Player 1</h3>
+        <p id="countP1">Score: 0</p>
+        <p>bash '\' until you win</p>
+      </section>
+      <img src="./images/pug.png" alt="Puggy Rascal" id="pug" />
+      <section>
+        <h3>Player 2</h3>
+        <p id="countP2">Score: 0</p>
+        <p>bash '/' until you win</p>
+      </section>
+
+      <footer id="hide">
+        <h2>
+          Tug a pug only works on desktop! Please don't dispare, a mobile
+          friendly version is on its way
+        </h2>
+      </footer>
+    </main>
+    <script>
+      let pug = document.getElementById("pug");
+      let countP1 = document.getElementById("countP1");
+      let countP2 = document.getElementById("countP2");
+
+      let leftPosition = 40;
+      let counterP1 = 0;
+      let counterP2 = 0;
+
+      const updateCss = () => {
+        pug.style.left = leftPosition + "%";
+      };
+
+      const pugMove = direction => {
+        if (direction === "left") {
+          leftPosition -= 5;
+          updateCss();
+        } else if (direction === "right") {
+          leftPosition += 5;
+          updateCss();
+        } else if (direction === "win") {
+          leftPosition = 40;
+          updateCss();
+        }
+      };
+
+      const reset = position => {
+        if (position === -5 || position === 85) {
+          leftPosition = 40;
+          pugMove("win");
+          console.log("Reset");
+        }
+      };
+
+      const win = position => {
+        if (position === -5) {
+          alert("Player 1 wins");
+          counterP1++;
+          countP1.innerHTML = "Score: " + counterP1;
+        } else if (position === 85) {
+          alert("Player 2 wins");
+          counterP2++;
+          console.log("Score: " + counterP2);
+          countP2.innerHTML = "Score: " + counterP2;
+        }
+      };
+
+      const move = event => {
+        if (event.code === "IntlBackslash") {
+          pugMove("left");
+          win(leftPosition);
+        } else if (event.code === "Slash") {
+          pugMove("right");
+          win(leftPosition);
+        }
+        reset(leftPosition);
+      };
+
+      document.addEventListener("keyup", move);
+    </script>
+  </body>
 </html>
