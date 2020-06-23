@@ -1,6 +1,6 @@
 # Tug-a-Pug
 
-Web address: http://test.jonlugg.co.uk/
+Web address: https://11lugg.github.io/Challenges/
 
 This was a great opportunity to use Javascript to manipulate the DOM.
 
